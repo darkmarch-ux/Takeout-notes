@@ -8,364 +8,118 @@
 <meta name="apple-mobile-web-app-title" content="Takeout Notes">
 <title>🥡 Takeout Notes</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #faf9f6;
-    --card: #ffffff;
-    --border: #e8e4de;
-    --accent: #e08c2e;
-    --accent-hover: #c97a1e;
-    --accent-light: #fef3e2;
-    --text: #1a1917;
-    --text-2: #6b6560;
-    --text-3: #a09a94;
+    --bg: #faf9f6; --card: #ffffff; --border: #e8e4de;
+    --accent: #e08c2e; --accent-hover: #c97a1e; --accent-light: #fef3e2;
+    --text: #1a1917; --text-2: #6b6560; --text-3: #a09a94;
     --serif: 'DM Serif Display', Georgia, serif;
-    --body: 'Lora', Georgia, serif;
-    --radius: 16px;
+    --body: 'Lora', Georgia, serif; --radius: 16px;
   }
-
-  body {
-    background: var(--bg);
-    font-family: var(--body);
-    color: var(--text);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { background: var(--bg); font-family: var(--body); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
   /* HEADER */
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(250,249,246,0.93);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 16px 0;
-  }
-  .header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-  }
-  .header h1 {
-    font-family: var(--serif);
-    font-size: 24px;
-    font-weight: 400;
-    color: var(--text);
-    line-height: 1.1;
-  }
-  .header-sub {
-    font-size: 11px;
-    color: var(--text-3);
-    margin-top: 2px;
-    margin-bottom: 12px;
-  }
-  .search-wrap {
-    padding-bottom: 12px;
-  }
-  .search-input {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 9px 14px;
-    font-family: var(--body);
-    font-size: 14px;
-    color: var(--text);
-    background: white;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .search-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(224,140,46,0.15);
-  }
+  .header { position: sticky; top: 0; z-index: 100; background: rgba(250,249,246,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 16px 12px; }
+  .header-inner { max-width: 520px; margin: 0 auto; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .header h1 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); line-height: 1.1; }
+
+  /* DRIVE BANNER — always visible below title */
+  .drive-banner { display: flex; align-items: center; justify-content: space-between; background: #fff8ee; border: 1px solid #f5ddb0; border-radius: 12px; padding: 10px 14px; gap: 10px; }
+  .drive-banner.connected { background: #f0faf0; border-color: #b6ddb6; }
+  .drive-banner-text { font-size: 13px; color: var(--text-2); flex: 1; }
+  .drive-banner-text strong { color: var(--text); font-weight: 600; }
+  .btn-connect { background: var(--accent); color: white; border: none; border-radius: 10px; padding: 8px 14px; font-family: var(--body); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.15s; flex-shrink: 0; }
+  .btn-connect:active { background: var(--accent-hover); }
+  .btn-connect.secondary { background: none; border: 1px solid var(--border); color: var(--text-3); font-weight: 400; padding: 7px 12px; }
+
+  .search-wrap { margin-top: 10px; }
+  .search-input { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 9px 14px; font-family: var(--body); font-size: 14px; color: var(--text); background: white; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,140,46,0.15); }
   .search-input::placeholder { color: var(--text-3); }
 
   /* MAIN */
-  .main {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 16px 16px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  .main { max-width: 520px; margin: 0 auto; padding: 16px 16px 80px; display: flex; flex-direction: column; gap: 10px; }
 
   /* FAB */
-  .fab {
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 28px;
-    padding: 14px 22px;
-    font-family: var(--body);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(224,140,46,0.4);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-    z-index: 50;
-  }
+  .fab { position: fixed; bottom: 24px; right: 20px; background: var(--accent); color: white; border: none; border-radius: 28px; padding: 14px 22px; font-family: var(--body); font-size: 15px; font-weight: 500; cursor: pointer; box-shadow: 0 4px 20px rgba(224,140,46,0.4); display: flex; align-items: center; gap: 8px; transition: background 0.15s, transform 0.1s; z-index: 50; }
   .fab:active { transform: scale(0.96); background: var(--accent-hover); }
 
   /* CARD */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: box-shadow 0.2s;
-    cursor: pointer;
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; cursor: pointer; }
   .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-  .card-header {
-    padding: 14px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
+  .card-header { padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; }
   .card-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
   .card-info { flex: 1; min-width: 0; }
-  .card-restaurant {
-    font-family: var(--serif);
-    font-size: 17px;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .card-dish {
-    font-size: 13px;
-    color: var(--text-2);
-    font-style: italic;
-    margin-top: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .card-date {
-    font-size: 11px;
-    color: var(--text-3);
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding-top: 3px;
-  }
-  .card-body {
-    padding: 0 16px 14px;
-    border-top: 1px solid #f5f3f0;
-    margin-top: 0;
-    animation: slideDown 0.18s ease;
-  }
+  .card-restaurant { font-family: var(--serif); font-size: 17px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-dish { font-size: 13px; color: var(--text-2); font-style: italic; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-date { font-size: 11px; color: var(--text-3); white-space: nowrap; flex-shrink: 0; padding-top: 3px; }
+  .card-body { padding: 0 16px 14px; border-top: 1px solid #f5f3f0; animation: slideDown 0.18s ease; }
   .card-body-inner { padding-top: 12px; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-  .tag {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 9px;
-    border-radius: 20px;
-    font-family: var(--body);
-  }
-  .tag-meh    { background: #f0f0f0; color: #666; }
-  .tag-good   { background: #e8f5e9; color: #2e7d32; }
-  .tag-fire   { background: #fdecea; color: #c62828; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; font-family: var(--body); }
+  .tag-meh { background: #f0f0f0; color: #666; }
+  .tag-good { background: #e8f5e9; color: #2e7d32; }
+  .tag-fire { background: #fdecea; color: #c62828; }
   .tag-repeat { background: #fff8e1; color: #b45309; }
   .card-notes { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-  .card-actions {
-    display: flex;
-    gap: 14px;
-    margin-top: 10px;
-    align-items: center;
-  }
-  .edit-btn {
-    background: none;
-    border: none;
-    font-size: 12px;
-    color: var(--accent);
-    cursor: pointer;
-    font-family: var(--body);
-    transition: color 0.15s;
-    padding: 2px 0;
-    font-weight: 500;
-  }
-  .edit-btn:hover { color: var(--accent-hover); }
-  .delete-btn {
-    background: none;
-    border: none;
-    font-size: 12px;
-    color: #ccc;
-    cursor: pointer;
-    font-family: var(--body);
-    transition: color 0.15s;
-    padding: 2px 0;
-  }
+  .card-actions { display: flex; gap: 14px; margin-top: 10px; align-items: center; }
+  .edit-btn { background: none; border: none; font-size: 12px; color: var(--accent); cursor: pointer; font-family: var(--body); transition: color 0.15s; padding: 2px 0; font-weight: 500; }
+  .delete-btn { background: none; border: none; font-size: 12px; color: #ccc; cursor: pointer; font-family: var(--body); transition: color 0.15s; padding: 2px 0; }
   .delete-btn:hover { color: #e53935; }
 
   /* FORM OVERLAY */
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    z-index: 200;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    animation: fadeIn 0.15s ease;
-  }
-  .form-sheet {
-    background: var(--card);
-    border-radius: 24px 24px 0 0;
-    padding: 24px 20px 36px;
-    width: 100%;
-    max-width: 520px;
-    animation: slideUp 0.22s ease;
-    max-height: 92vh;
-    overflow-y: auto;
-  }
-  .form-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-weight: 400;
-    margin-bottom: 18px;
-    color: var(--text);
-  }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.15s ease; }
+  .form-sheet { background: var(--card); border-radius: 24px 24px 0 0; padding: 24px 20px 36px; width: 100%; max-width: 520px; animation: slideUp 0.22s ease; max-height: 92vh; overflow-y: auto; }
+  .form-title { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 18px; color: var(--text); }
   .form-group { margin-bottom: 12px; }
-  .form-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-3);
-    margin-bottom: 6px;
-  }
-  .form-input, .form-textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 11px 14px;
-    font-family: var(--body);
-    font-size: 15px;
-    color: var(--text);
-    background: white;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    -webkit-appearance: none;
-  }
-  .form-input:focus, .form-textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(224,140,46,0.15);
-  }
+  .form-label { display: block; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); margin-bottom: 6px; }
+  .form-input, .form-textarea { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 11px 14px; font-family: var(--body); font-size: 15px; color: var(--text); background: white; outline: none; transition: border-color 0.15s, box-shadow 0.15s; -webkit-appearance: none; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,140,46,0.15); }
   .form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
   .form-textarea { resize: none; line-height: 1.5; }
-
   .rating-row { display: flex; gap: 8px; }
-  .rating-btn {
-    flex: 1;
-    padding: 10px 6px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: white;
-    font-family: var(--body);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.12s;
-    color: var(--text-2);
-  }
-  .rating-btn.active {
-    border-color: var(--accent);
-    background: var(--accent-light);
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    padding: 4px 0;
-  }
-  .checkbox-row input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--accent);
-    cursor: pointer;
-  }
+  .rating-btn { flex: 1; padding: 10px 6px; border: 1px solid var(--border); border-radius: 12px; background: white; font-family: var(--body); font-size: 13px; cursor: pointer; transition: all 0.12s; color: var(--text-2); }
+  .rating-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--text); font-weight: 500; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 4px 0; }
+  .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
   .checkbox-row span { font-size: 14px; color: var(--text); }
-
   .form-actions { display: flex; gap: 10px; margin-top: 18px; }
-  .btn-save {
-    flex: 1;
-    padding: 14px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-family: var(--body);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-  }
+  .btn-save { flex: 1; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 14px; font-family: var(--body); font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.15s, transform 0.1s; }
   .btn-save:active { transform: scale(0.97); }
-  .btn-save:disabled { background: #ddd; color: #aaa; cursor: default; }
-  .btn-cancel {
-    padding: 14px 20px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: white;
-    font-family: var(--body);
-    font-size: 15px;
-    color: var(--text-2);
-    cursor: pointer;
-    transition: background 0.12s;
-  }
-  .btn-cancel:active { background: #f5f5f5; }
+  .btn-cancel { padding: 14px 20px; border: 1px solid var(--border); border-radius: 14px; background: white; font-family: var(--body); font-size: 15px; color: var(--text-2); cursor: pointer; }
 
-  /* EMPTY */
-  .empty {
-    text-align: center;
-    padding: 64px 20px;
-    color: var(--text-3);
-  }
+  .empty { text-align: center; padding: 64px 20px; color: var(--text-3); }
   .empty-icon { font-size: 48px; margin-bottom: 12px; }
   .empty-text { font-size: 15px; font-style: italic; }
 
-  /* ANIMATIONS */
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-family: var(--body); z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div style="max-width:520px;margin:0 auto;">
-    <div class="header-row">
-      <div>
-        <h1>🥡 Takeout Notes</h1>
-        <p class="header-sub" id="count-label">0 saved orders</p>
-      </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>🥡 Takeout Notes</h1>
+      <span id="count-label" style="font-size:12px;color:var(--text-3);">0 orders</span>
     </div>
+
+    <!-- Drive banner — always visible -->
+    <div class="drive-banner" id="drive-banner">
+      <span class="drive-banner-text" id="drive-banner-text">
+        <strong>Not synced.</strong> Connect Google Drive to back up your notes automatically.
+      </span>
+      <button class="btn-connect" id="btn-connect" onclick="signIn()">Connect Drive</button>
+    </div>
+
     <div class="search-wrap" id="search-wrap" style="display:none;">
       <input class="search-input" id="search" placeholder="Search restaurants or dishes…" oninput="render()" autocomplete="off">
     </div>
@@ -378,11 +132,9 @@
   <span style="font-size:18px;">+</span> Log order
 </button>
 
-<!-- FORM OVERLAY -->
 <div class="overlay" id="overlay" style="display:none;" onclick="handleOverlayClick(event)">
-  <div class="form-sheet" id="form-sheet">
+  <div class="form-sheet">
     <div class="form-title" id="form-title">Log an order</div>
-
     <div class="form-group">
       <label class="form-label">Restaurant</label>
       <input class="form-input" id="f-restaurant" placeholder="e.g. Golden Dragon" autocomplete="off">
@@ -410,32 +162,181 @@
       </label>
     </div>
     <div class="form-actions">
-      <button class="btn-save" id="btn-save" onclick="saveEntry()">Save</button>
+      <button class="btn-save" onclick="saveEntry()">Save</button>
       <button class="btn-cancel" onclick="closeForm()">Cancel</button>
     </div>
   </div>
 </div>
 
-<script>
-  const STORAGE_KEY = 'takeout-notes-v1';
-  const RATINGS = ['😐','👍','🔥'];
-  const RATING_LABELS = ['Meh','Good','Amazing'];
-  const RATING_TAGS = ['tag-meh','tag-good','tag-fire'];
-  let entries = [];
-  let expandedId = null;
-  let currentRating = 1;
-  let editingId = null;
+<div class="toast" id="toast"></div>
 
-  function load() {
-    try { entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { entries = []; }
+<script>
+  const CLIENT_ID  = '985865079609-hdq8jqsa5jmga93fk35647034qopki8v.apps.googleusercontent.com';
+  const SCOPE      = 'https://www.googleapis.com/auth/drive.appdata';
+  const DRIVE_FILE = 'takeout-notes.json';
+  const LOCAL_KEY  = 'takeout-notes-v1';
+
+  const RATINGS       = ['😐','👍','🔥'];
+  const RATING_LABELS = ['Meh','Good','Amazing'];
+  const RATING_TAGS   = ['tag-meh','tag-good','tag-fire'];
+
+  let entries       = [];
+  let expandedId    = null;
+  let currentRating = 1;
+  let editingId     = null;
+  let accessToken   = null;
+  let driveFileId   = null;
+  let tokenClient   = null;
+
+  function localLoad() {
+    try { entries = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]'); } catch { entries = []; }
+  }
+  function localSave() { localStorage.setItem(LOCAL_KEY, JSON.stringify(entries)); }
+
+  function toast(msg, dur = 2400) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), dur);
+  }
+
+  function updateBanner(state) {
+    const banner = document.getElementById('drive-banner');
+    const text   = document.getElementById('drive-banner-text');
+    const btn    = document.getElementById('btn-connect');
+    if (state === 'connected') {
+      banner.classList.add('connected');
+      text.innerHTML = '<strong>✓ Google Drive connected.</strong> Notes sync automatically.';
+      btn.textContent = 'Sign out';
+      btn.className = 'btn-connect secondary';
+      btn.onclick = signOut;
+    } else if (state === 'syncing') {
+      text.innerHTML = '<strong>Syncing…</strong>';
+      btn.style.display = 'none';
+    } else {
+      banner.classList.remove('connected');
+      text.innerHTML = '<strong>Not synced.</strong> Connect Google Drive to back up your notes automatically.';
+      btn.textContent = 'Connect Drive';
+      btn.className = 'btn-connect';
+      btn.onclick = signIn;
+      btn.style.display = '';
+    }
+  }
+
+  // ── AUTH ──────────────────────────────────────────────
+  window.addEventListener('load', () => {
+    const wait = setInterval(() => {
+      if (window.google?.accounts?.oauth2) {
+        clearInterval(wait);
+        initAuth();
+      }
+    }, 150);
+  });
+
+  function initAuth() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPE,
+      callback: async (resp) => {
+        if (resp.error) { updateBanner('disconnected'); toast('Auth failed — try again'); return; }
+        accessToken = resp.access_token;
+        updateBanner('syncing');
+        await loadFromDrive();
+      }
+    });
+    updateBanner('disconnected');
+    if (localStorage.getItem('gd-signed-in')) {
+      tokenClient.requestAccessToken({ prompt: '' });
+    }
+  }
+
+  function signIn() {
+    localStorage.setItem('gd-signed-in', '1');
+    tokenClient.requestAccessToken({ prompt: 'consent' });
+  }
+
+  function signOut() {
+    if (accessToken) google.accounts.oauth2.revoke(accessToken);
+    accessToken = null; driveFileId = null;
+    localStorage.removeItem('gd-signed-in');
+    updateBanner('disconnected');
+    toast('Signed out — notes still saved locally');
+  }
+
+  // ── DRIVE ─────────────────────────────────────────────
+  async function findDriveFile() {
+    const res = await fetch(
+      `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D'${DRIVE_FILE}'&fields=files(id)`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    const data = await res.json();
+    return data.files?.[0]?.id || null;
+  }
+
+  async function loadFromDrive() {
+    try {
+      driveFileId = await findDriveFile();
+      if (!driveFileId) {
+        await saveToDrive();
+        return;
+      }
+      const res = await fetch(
+        `https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const data = await res.json();
+      if (Array.isArray(data) && data.length >= entries.length) {
+        entries = data;
+        localSave();
+      }
+      render();
+      updateBanner('connected');
+      toast('Drive synced ✓');
+    } catch (e) {
+      updateBanner('disconnected');
+      toast('Sync failed — check connection');
+      console.error(e);
+    }
+  }
+
+  async function saveToDrive() {
+    if (!accessToken) return;
+    try {
+      const body = JSON.stringify(entries);
+      if (driveFileId) {
+        await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+          body
+        });
+      } else {
+        const meta = JSON.stringify({ name: DRIVE_FILE, parents: ['appDataFolder'] });
+        const form = new FormData();
+        form.append('metadata', new Blob([meta], { type: 'application/json' }));
+        form.append('file', new Blob([body], { type: 'application/json' }));
+        const res = await fetch(
+          'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
+          { method: 'POST', headers: { Authorization: `Bearer ${accessToken}` }, body: form }
+        );
+        const data = await res.json();
+        driveFileId = data.id;
+      }
+      updateBanner('connected');
+    } catch (e) {
+      console.error('Drive save failed', e);
+    }
   }
 
   function persist() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    localSave();
+    if (accessToken) saveToDrive();
   }
 
+  // ── RENDER ────────────────────────────────────────────
   function formatDate(iso) {
     return new Date(iso).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+  }
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function render() {
@@ -447,13 +348,11 @@
           (e.notes||'').toLowerCase().includes(q))
       : entries;
 
+    document.getElementById('count-label').textContent =
+      `${entries.length} ${entries.length === 1 ? 'order' : 'orders'}`;
+    document.getElementById('search-wrap').style.display = entries.length > 2 ? 'block' : 'none';
+
     const list = document.getElementById('list');
-    const countLabel = document.getElementById('count-label');
-    const searchWrap = document.getElementById('search-wrap');
-
-    countLabel.textContent = `${entries.length} saved ${entries.length === 1 ? 'order' : 'orders'}`;
-    searchWrap.style.display = entries.length > 2 ? 'block' : 'none';
-
     if (filtered.length === 0) {
       list.innerHTML = `<div class="empty"><div class="empty-icon">🍜</div><p class="empty-text">${q ? 'No matches found.' : 'No orders yet. Tap + to log your first!'}</p></div>`;
       return;
@@ -475,41 +374,32 @@
             <div class="card-date">${formatDate(e.date)}</div>
           </div>
           ${isOpen ? `
-          <div class="card-body">
-            <div class="card-body-inner">
-              <div class="tags">
-                <span class="tag ${tagClass}">${ratingLabel}</span>
-                ${e.wouldOrder ? '<span class="tag tag-repeat">Would order again</span>' : ''}
-              </div>
-              ${e.notes ? `<div class="card-notes">${esc(e.notes)}</div>` : ''}
-              <div class="card-actions">
-                <button class="edit-btn" onclick="editEntry(event, ${e.id})">Edit</button>
-                <button class="delete-btn" onclick="deleteEntry(event, ${e.id})">Delete</button>
-              </div>
+          <div class="card-body"><div class="card-body-inner">
+            <div class="tags">
+              <span class="tag ${tagClass}">${ratingLabel}</span>
+              ${e.wouldOrder ? '<span class="tag tag-repeat">Would order again</span>' : ''}
             </div>
-          </div>` : ''}
+            ${e.notes ? `<div class="card-notes">${esc(e.notes)}</div>` : ''}
+            <div class="card-actions">
+              <button class="edit-btn" onclick="editEntry(event,${e.id})">Edit</button>
+              <button class="delete-btn" onclick="deleteEntry(event,${e.id})">Delete</button>
+            </div>
+          </div></div>` : ''}
         </div>`;
     }).join('');
   }
 
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+  function toggleCard(id) { expandedId = expandedId === id ? null : id; render(); }
 
-  function toggleCard(id) {
-    expandedId = expandedId === id ? null : id;
-    render();
-  }
-
-  function deleteEntry(e, id) {
-    e.stopPropagation();
+  function deleteEntry(ev, id) {
+    ev.stopPropagation();
     entries = entries.filter(x => x.id !== id);
     if (expandedId === id) expandedId = null;
-    persist();
-    render();
+    persist(); render();
+    toast('Entry deleted');
   }
 
-  // FORM
+  // ── FORM ──────────────────────────────────────────────
   function openForm() {
     editingId = null;
     document.getElementById('form-title').textContent = 'Log an order';
@@ -522,8 +412,8 @@
     setTimeout(() => document.getElementById('f-restaurant').focus(), 100);
   }
 
-  function editEntry(e, id) {
-    e.stopPropagation();
+  function editEntry(ev, id) {
+    ev.stopPropagation();
     const entry = entries.find(x => x.id === id);
     if (!entry) return;
     editingId = id;
@@ -537,19 +427,13 @@
     setTimeout(() => document.getElementById('f-restaurant').focus(), 100);
   }
 
-  function closeForm() {
-    document.getElementById('overlay').style.display = 'none';
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('overlay')) closeForm();
-  }
+  function closeForm() { document.getElementById('overlay').style.display = 'none'; }
+  function handleOverlayClick(e) { if (e.target === document.getElementById('overlay')) closeForm(); }
 
   function setRating(r) {
     currentRating = r;
-    document.querySelectorAll('.rating-btn').forEach(btn => {
-      btn.classList.toggle('active', parseInt(btn.dataset.r) === r);
-    });
+    document.querySelectorAll('.rating-btn').forEach(btn =>
+      btn.classList.toggle('active', parseInt(btn.dataset.r) === r));
   }
 
   function saveEntry() {
@@ -564,32 +448,29 @@
         rating: currentRating,
         wouldOrder: document.getElementById('f-repeat').checked
       } : x);
+      toast('Entry updated');
     } else {
-      const entry = {
+      entries.unshift({
         id: Date.now(),
         date: new Date().toISOString(),
         restaurant, dish,
         notes: document.getElementById('f-notes').value.trim(),
         rating: currentRating,
         wouldOrder: document.getElementById('f-repeat').checked
-      };
-      entries.unshift(entry);
+      });
+      toast(accessToken ? 'Saved & synced to Drive ✓' : 'Saved locally');
     }
-    persist();
-    closeForm();
-    render();
+    persist(); closeForm(); render();
   }
 
-  // Enter key to save
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && document.getElementById('overlay').style.display !== 'none') {
-      const active = document.activeElement;
-      if (active && active.tagName !== 'TEXTAREA') saveEntry();
+      if (document.activeElement?.tagName !== 'TEXTAREA') saveEntry();
     }
     if (e.key === 'Escape') closeForm();
   });
 
-  load();
+  localLoad();
   render();
 </script>
 </body>
