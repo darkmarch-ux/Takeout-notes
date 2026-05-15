@@ -20,61 +20,91 @@
   }
   body { background: var(--bg); font-family: var(--body); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
+  /* HEADER */
   .header { position: sticky; top: 0; z-index: 100; background: rgba(250,249,246,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 16px 12px; }
   .header-inner { max-width: 520px; margin: 0 auto; }
   .header-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
   .header h1 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); line-height: 1.1; }
 
-  .drive-banner { display: flex; align-items: center; justify-content: space-between; background: #fff8ee; border: 1px solid #f5ddb0; border-radius: 12px; padding: 10px 14px; gap: 10px; }
+  /* DRIVE BANNER */
+  .drive-banner { display: flex; align-items: center; justify-content: space-between; background: #fff8ee; border: 1px solid #f5ddb0; border-radius: 12px; padding: 10px 14px; gap: 10px; margin-bottom: 10px; }
   .drive-banner.connected { background: #f0faf0; border-color: #b6ddb6; }
-  .drive-banner.syncing { background: #fff8ee; border-color: #f5ddb0; }
   .drive-banner-text { font-size: 13px; color: var(--text-2); flex: 1; line-height: 1.4; }
   .drive-banner-text strong { color: var(--text); font-weight: 600; }
   .btn-connect { background: var(--accent); color: white; border: none; border-radius: 10px; padding: 8px 14px; font-family: var(--body); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.15s; flex-shrink: 0; }
   .btn-connect:active { background: var(--accent-hover); }
   .btn-connect.secondary { background: none; border: 1px solid var(--border); color: var(--text-3); font-weight: 400; padding: 7px 12px; font-size: 12px; }
 
-  .search-wrap { margin-top: 10px; }
+  /* SEARCH + FILTERS */
+  .controls { display: flex; flex-direction: column; gap: 8px; }
   .search-input { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 9px 14px; font-family: var(--body); font-size: 14px; color: var(--text); background: white; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
   .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,140,46,0.15); }
   .search-input::placeholder { color: var(--text-3); }
+  .filter-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; background: white; font-family: var(--body); font-size: 12px; color: var(--text-2); cursor: pointer; transition: all 0.12s; white-space: nowrap; }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .sort-select { flex-shrink: 0; padding: 6px 10px; border: 1px solid var(--border); border-radius: 20px; background: white; font-family: var(--body); font-size: 12px; color: var(--text-2); cursor: pointer; outline: none; }
 
-  .main { max-width: 520px; margin: 0 auto; padding: 16px 16px 80px; display: flex; flex-direction: column; gap: 10px; }
+  /* MAIN */
+  .main { max-width: 520px; margin: 0 auto; padding: 16px 16px 80px; display: flex; flex-direction: column; gap: 12px; }
 
+  /* FAB */
   .fab { position: fixed; bottom: 24px; right: 20px; background: var(--accent); color: white; border: none; border-radius: 28px; padding: 14px 22px; font-family: var(--body); font-size: 15px; font-weight: 500; cursor: pointer; box-shadow: 0 4px 20px rgba(224,140,46,0.4); display: flex; align-items: center; gap: 8px; transition: background 0.15s, transform 0.1s; z-index: 50; }
   .fab:active { transform: scale(0.96); background: var(--accent-hover); }
 
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; cursor: pointer; }
-  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-  .card-header { padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; }
-  .card-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-  .card-info { flex: 1; min-width: 0; }
-  .card-restaurant { font-family: var(--serif); font-size: 17px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-dish { font-size: 13px; color: var(--text-2); font-style: italic; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-date { font-size: 11px; color: var(--text-3); white-space: nowrap; flex-shrink: 0; padding-top: 3px; }
-  .card-body { padding: 0 16px 14px; border-top: 1px solid #f5f3f0; animation: slideDown 0.18s ease; }
-  .card-body-inner { padding-top: 12px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  /* RESTAURANT GROUP */
+  .restaurant-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .group-header { padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: background 0.12s; }
+  .group-header:active { background: #f9f7f4; }
+  .group-icon { font-size: 22px; flex-shrink: 0; }
+  .group-info { flex: 1; min-width: 0; }
+  .group-name { font-family: var(--serif); font-size: 18px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .group-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+  .group-meta-item { font-size: 11px; color: var(--text-3); }
+  .group-avg { font-size: 13px; }
+  .group-chevron { font-size: 12px; color: var(--text-3); flex-shrink: 0; transition: transform 0.2s; }
+  .group-chevron.open { transform: rotate(180deg); }
+
+  /* ORDER ENTRIES inside group */
+  .group-entries { border-top: 1px solid #f0ede8; }
+  .entry-row { padding: 12px 16px; border-bottom: 1px solid #f5f3f0; cursor: pointer; transition: background 0.1s; }
+  .entry-row:last-child { border-bottom: none; }
+  .entry-row:active { background: #faf9f6; }
+  .entry-row-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .entry-dish { font-size: 14px; color: var(--text); font-style: italic; flex: 1; }
+  .entry-date { font-size: 11px; color: var(--text-3); white-space: nowrap; flex-shrink: 0; }
+  .entry-detail { margin-top: 8px; animation: slideDown 0.15s ease; }
+  .entry-notes { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-bottom: 8px; }
+  .entry-actions { display: flex; gap: 14px; }
+  .edit-btn { background: none; border: none; font-size: 12px; color: var(--accent); cursor: pointer; font-family: var(--body); padding: 2px 0; font-weight: 500; }
+  .delete-btn { background: none; border: none; font-size: 12px; color: #ccc; cursor: pointer; font-family: var(--body); padding: 2px 0; transition: color 0.15s; }
+  .delete-btn:hover { color: #e53935; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px; }
   .tag { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; font-family: var(--body); }
   .tag-meh { background: #f0f0f0; color: #666; }
   .tag-good { background: #e8f5e9; color: #2e7d32; }
   .tag-fire { background: #fdecea; color: #c62828; }
   .tag-repeat { background: #fff8e1; color: #b45309; }
-  .card-notes { font-size: 13px; color: var(--text-2); line-height: 1.6; }
-  .card-actions { display: flex; gap: 14px; margin-top: 10px; align-items: center; }
-  .edit-btn { background: none; border: none; font-size: 12px; color: var(--accent); cursor: pointer; font-family: var(--body); transition: color 0.15s; padding: 2px 0; font-weight: 500; }
-  .delete-btn { background: none; border: none; font-size: 12px; color: #ccc; cursor: pointer; font-family: var(--body); transition: color 0.15s; padding: 2px 0; }
-  .delete-btn:hover { color: #e53935; }
 
+  /* FORM OVERLAY */
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.15s ease; }
   .form-sheet { background: var(--card); border-radius: 24px 24px 0 0; padding: 24px 20px 36px; width: 100%; max-width: 520px; animation: slideUp 0.22s ease; max-height: 92vh; overflow-y: auto; }
   .form-title { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 18px; color: var(--text); }
-  .form-group { margin-bottom: 12px; }
+  .form-group { margin-bottom: 12px; position: relative; }
   .form-label { display: block; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); margin-bottom: 6px; }
   .form-input, .form-textarea { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 11px 14px; font-family: var(--body); font-size: 15px; color: var(--text); background: white; outline: none; transition: border-color 0.15s, box-shadow 0.15s; -webkit-appearance: none; }
   .form-input:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,140,46,0.15); }
   .form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
   .form-textarea { resize: none; line-height: 1.5; }
+
+  /* AUTOCOMPLETE */
+  .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); z-index: 10; overflow: hidden; margin-top: 4px; }
+  .autocomplete-item { padding: 11px 14px; font-family: var(--body); font-size: 14px; color: var(--text); cursor: pointer; transition: background 0.1s; }
+  .autocomplete-item:hover, .autocomplete-item.highlighted { background: var(--accent-light); }
+
   .rating-row { display: flex; gap: 8px; }
   .rating-btn { flex: 1; padding: 10px 6px; border: 1px solid var(--border); border-radius: 12px; background: white; font-family: var(--body); font-size: 13px; cursor: pointer; transition: all 0.12s; color: var(--text-2); }
   .rating-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--text); font-weight: 500; }
@@ -93,7 +123,7 @@
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-family: var(--body); z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; }
 
-  @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
@@ -107,13 +137,24 @@
       <span id="count-label" style="font-size:12px;color:var(--text-3);">0 orders</span>
     </div>
     <div class="drive-banner" id="drive-banner">
-      <span class="drive-banner-text" id="drive-banner-text">
-        <strong>Connecting…</strong>
-      </span>
+      <span class="drive-banner-text" id="drive-banner-text"><strong>Connecting…</strong></span>
       <button class="btn-connect" id="btn-connect" style="display:none;" onclick="signIn()">Connect Drive</button>
     </div>
-    <div class="search-wrap" id="search-wrap" style="display:none;">
+    <div class="controls" id="controls" style="display:none;">
       <input class="search-input" id="search" placeholder="Search restaurants or dishes…" oninput="render()" autocomplete="off">
+      <div class="filter-row">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" data-filter="2" onclick="setFilter('2',this)">🔥 Amazing</button>
+        <button class="filter-btn" data-filter="1" onclick="setFilter('1',this)">👍 Good</button>
+        <button class="filter-btn" data-filter="0" onclick="setFilter('0',this)">😐 Meh</button>
+        <button class="filter-btn" data-filter="repeat" onclick="setFilter('repeat',this)">↩ Order again</button>
+        <select class="sort-select" id="sort-select" onchange="render()">
+          <option value="recent">Most recent</option>
+          <option value="name">Restaurant A–Z</option>
+          <option value="rating">Highest rated</option>
+          <option value="visits">Most visited</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>
@@ -127,9 +168,11 @@
 <div class="overlay" id="overlay" style="display:none;" onclick="handleOverlayClick(event)">
   <div class="form-sheet">
     <div class="form-title" id="form-title">Log an order</div>
-    <div class="form-group">
+    <div class="form-group" id="restaurant-group">
       <label class="form-label">Restaurant</label>
-      <input class="form-input" id="f-restaurant" placeholder="e.g. Golden Dragon" autocomplete="off">
+      <input class="form-input" id="f-restaurant" placeholder="e.g. Golden Dragon" autocomplete="off"
+        oninput="showAutocomplete()" onkeydown="handleAutoKey(event)" onfocus="showAutocomplete()">
+      <div class="autocomplete-list" id="autocomplete" style="display:none;"></div>
     </div>
     <div class="form-group">
       <label class="form-label">Dish or order</label>
@@ -163,24 +206,28 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const CLIENT_ID  = '985865079609-hdq8jqsa5jmga93fk35647034qopki8v.apps.googleusercontent.com';
-  const SCOPE      = 'https://www.googleapis.com/auth/drive.appdata';
-  const DRIVE_FILE = 'takeout-notes.json';
-  const LOCAL_KEY  = 'takeout-notes-v1';
-  const TOKEN_KEY  = 'gd-token';
+  const CLIENT_ID     = '985865079609-hdq8jqsa5jmga93fk35647034qopki8v.apps.googleusercontent.com';
+  const SCOPE         = 'https://www.googleapis.com/auth/drive.appdata';
+  const DRIVE_FILE    = 'takeout-notes.json';
+  const LOCAL_KEY     = 'takeout-notes-v1';
+  const TOKEN_KEY     = 'gd-token';
   const TOKEN_EXP_KEY = 'gd-token-exp';
 
   const RATINGS       = ['😐','👍','🔥'];
   const RATING_LABELS = ['Meh','Good','Amazing'];
   const RATING_TAGS   = ['tag-meh','tag-good','tag-fire'];
+  const GROUP_ICONS   = ['🍱','🍜','🍕','🌮','🥗','🍔','🍣','🥘','🍛','🥙'];
 
   let entries       = [];
-  let expandedId    = null;
+  let expandedGroup = null; // restaurant name
+  let expandedEntry = null; // entry id
   let currentRating = 1;
   let editingId     = null;
   let accessToken   = null;
   let driveFileId   = null;
   let tokenClient   = null;
+  let currentFilter = 'all';
+  let acHighlight   = -1;
 
   // ── LOCAL ─────────────────────────────────────────────
   function localLoad() {
@@ -189,17 +236,14 @@
   function localSave() { localStorage.setItem(LOCAL_KEY, JSON.stringify(entries)); }
 
   // ── TOKEN CACHE ───────────────────────────────────────
-  // Tokens last ~1 hour; we cache them and silently refresh when possible
-  function saveToken(token) {
-    const exp = Date.now() + 55 * 60 * 1000; // 55 min to be safe
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem(TOKEN_EXP_KEY, exp.toString());
+  function saveToken(t) {
+    localStorage.setItem(TOKEN_KEY, t);
+    localStorage.setItem(TOKEN_EXP_KEY, (Date.now() + 55*60*1000).toString());
   }
   function loadCachedToken() {
-    const token = localStorage.getItem(TOKEN_KEY);
-    const exp   = parseInt(localStorage.getItem(TOKEN_EXP_KEY) || '0');
-    if (token && Date.now() < exp) return token;
-    return null;
+    const t = localStorage.getItem(TOKEN_KEY);
+    const e = parseInt(localStorage.getItem(TOKEN_EXP_KEY)||'0');
+    return (t && Date.now() < e) ? t : null;
   }
   function clearToken() {
     localStorage.removeItem(TOKEN_KEY);
@@ -208,7 +252,7 @@
   }
 
   // ── TOAST ─────────────────────────────────────────────
-  function toast(msg, dur = 2400) {
+  function toast(msg, dur=2400) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), dur);
@@ -222,25 +266,17 @@
     banner.className = 'drive-banner';
     if (state === 'connected') {
       banner.classList.add('connected');
-      text.innerHTML = '<strong>✓ Google Drive synced.</strong> Notes back up automatically.';
-      btn.textContent = 'Sign out';
-      btn.className = 'btn-connect secondary';
-      btn.onclick = signOut;
-      btn.style.display = '';
+      text.innerHTML = '<strong>✓ Drive synced.</strong> Notes back up automatically.';
+      btn.textContent = 'Sign out'; btn.className = 'btn-connect secondary';
+      btn.onclick = signOut; btn.style.display = '';
     } else if (state === 'syncing') {
-      banner.classList.add('syncing');
-      text.innerHTML = '<strong>Syncing with Drive…</strong>';
-      btn.style.display = 'none';
+      text.innerHTML = '<strong>Syncing…</strong>'; btn.style.display = 'none';
     } else if (state === 'connecting') {
-      text.innerHTML = '<strong>Connecting…</strong>';
-      btn.style.display = 'none';
+      text.innerHTML = '<strong>Connecting…</strong>'; btn.style.display = 'none';
     } else {
-      // disconnected
       text.innerHTML = '<strong>Not synced.</strong> Connect Google Drive to back up automatically.';
-      btn.textContent = 'Connect Drive';
-      btn.className = 'btn-connect';
-      btn.onclick = signIn;
-      btn.style.display = '';
+      btn.textContent = 'Connect Drive'; btn.className = 'btn-connect';
+      btn.onclick = signIn; btn.style.display = '';
     }
   }
 
@@ -248,48 +284,28 @@
   window.addEventListener('load', () => {
     updateBanner('connecting');
     const wait = setInterval(() => {
-      if (window.google?.accounts?.oauth2) {
-        clearInterval(wait);
-        initAuth();
-      }
+      if (window.google?.accounts?.oauth2) { clearInterval(wait); initAuth(); }
     }, 150);
-    // Fallback if GSI never loads
-    setTimeout(() => {
-      if (!tokenClient) updateBanner('disconnected');
-    }, 5000);
+    setTimeout(() => { if (!tokenClient) updateBanner('disconnected'); }, 5000);
   });
 
   function initAuth() {
     tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope: SCOPE,
+      client_id: CLIENT_ID, scope: SCOPE,
       callback: async (resp) => {
-        if (resp.error) {
-          clearToken();
-          updateBanner('disconnected');
-          toast('Sign-in failed — tap Connect Drive to try again');
-          return;
-        }
+        if (resp.error) { clearToken(); updateBanner('disconnected'); toast('Sign-in failed'); return; }
         accessToken = resp.access_token;
         saveToken(accessToken);
-        localStorage.setItem('gd-signed-in', '1');
+        localStorage.setItem('gd-signed-in','1');
         updateBanner('syncing');
         await loadFromDrive();
       }
     });
-
-    // Try cached token first — no sign-in prompt needed
     const cached = loadCachedToken();
     if (cached) {
-      accessToken = cached;
-      updateBanner('syncing');
-      loadFromDrive().catch(() => {
-        // Token expired — request silently
-        clearToken();
-        silentRefresh();
-      });
+      accessToken = cached; updateBanner('syncing');
+      loadFromDrive().catch(() => { clearToken(); silentRefresh(); });
     } else if (localStorage.getItem('gd-signed-in')) {
-      // Had auth before, try silent refresh (no popup)
       silentRefresh();
     } else {
       updateBanner('disconnected');
@@ -297,26 +313,13 @@
   }
 
   function silentRefresh() {
-    // prompt: '' means no UI shown — will fail gracefully if session expired
-    try {
-      tokenClient.requestAccessToken({ prompt: '' });
-    } catch {
-      updateBanner('disconnected');
-    }
+    try { tokenClient.requestAccessToken({ prompt: '' }); } catch { updateBanner('disconnected'); }
   }
-
-  function signIn() {
-    tokenClient.requestAccessToken({ prompt: 'consent' });
-  }
-
+  function signIn() { tokenClient.requestAccessToken({ prompt: 'consent' }); }
   function signOut() {
-    if (accessToken) {
-      try { google.accounts.oauth2.revoke(accessToken); } catch {}
-    }
-    accessToken = null; driveFileId = null;
-    clearToken();
-    updateBanner('disconnected');
-    toast('Signed out — notes still saved locally');
+    if (accessToken) { try { google.accounts.oauth2.revoke(accessToken); } catch {} }
+    accessToken = null; driveFileId = null; clearToken();
+    updateBanner('disconnected'); toast('Signed out — notes saved locally');
   }
 
   // ── DRIVE ─────────────────────────────────────────────
@@ -326,49 +329,35 @@
       { headers: { Authorization: `Bearer ${accessToken}` } }
     );
     if (res.status === 401) throw new Error('token_expired');
-    const data = await res.json();
-    return data.files?.[0]?.id || null;
+    if (res.status === 403) throw new Error('forbidden');
+    return (await res.json()).files?.[0]?.id || null;
   }
 
   async function loadFromDrive() {
     try {
       driveFileId = await findDriveFile();
-      if (!driveFileId) {
-        // Nothing on Drive yet — push local up
-        await saveToDrive();
-        return;
-      }
+      if (!driveFileId) { await saveToDrive(); return; }
       const res = await fetch(
         `https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (res.status === 401) throw new Error('token_expired');
       const driveEntries = await res.json();
-
-      // MERGE: combine local + drive, deduplicate by id, sort newest first
-      if (Array.isArray(driveEntries)) {
+      if (Array.isArray(driveEntries) && driveEntries.length > 0) {
         const merged = [...entries, ...driveEntries];
         const seen = new Set();
         entries = merged
           .filter(e => { if (seen.has(e.id)) return false; seen.add(e.id); return true; })
-          .sort((a, b) => b.id - a.id);
+          .sort((a,b) => b.id - a.id);
         localSave();
-        await saveToDrive(); // push merged result back up
+        await saveToDrive();
+      } else if (entries.length > 0) {
+        await saveToDrive(); // push local up if drive is empty
       }
-
-      render();
-      updateBanner('connected');
-    } catch (e) {
-      if (e.message === 'token_expired') {
-        accessToken = null;
-        clearToken();
-        updateBanner('disconnected');
-        toast('Session expired — tap Connect Drive');
-      } else {
-        updateBanner('disconnected');
-        toast('Could not reach Drive — working offline');
-        console.error(e);
-      }
+      render(); updateBanner('connected');
+    } catch(e) {
+      if (e.message === 'token_expired') { accessToken = null; clearToken(); updateBanner('disconnected'); toast('Session expired — tap Connect Drive'); }
+      else { updateBanner('disconnected'); toast('Working offline'); console.error(e); }
     }
   }
 
@@ -377,106 +366,206 @@
     try {
       const body = JSON.stringify(entries);
       if (driveFileId) {
-        const res = await fetch(
-          `https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,
-          { method: 'PATCH', headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }, body }
-        );
+        const res = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+          method:'PATCH', headers:{Authorization:`Bearer ${accessToken}`,'Content-Type':'application/json'}, body
+        });
         if (res.status === 401) throw new Error('token_expired');
       } else {
-        const meta = JSON.stringify({ name: DRIVE_FILE, parents: ['appDataFolder'] });
         const form = new FormData();
-        form.append('metadata', new Blob([meta], { type: 'application/json' }));
-        form.append('file', new Blob([body], { type: 'application/json' }));
-        const res = await fetch(
-          'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
-          { method: 'POST', headers: { Authorization: `Bearer ${accessToken}` }, body: form }
-        );
+        form.append('metadata', new Blob([JSON.stringify({name:DRIVE_FILE,parents:['appDataFolder']})],{type:'application/json'}));
+        form.append('file', new Blob([body],{type:'application/json'}));
+        const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
+          method:'POST', headers:{Authorization:`Bearer ${accessToken}`}, body:form
+        });
         if (res.status === 401) throw new Error('token_expired');
-        const data = await res.json();
-        driveFileId = data.id;
+        driveFileId = (await res.json()).id;
       }
       updateBanner('connected');
-    } catch (e) {
-      if (e.message === 'token_expired') {
-        accessToken = null; clearToken();
-        updateBanner('disconnected');
-      }
+    } catch(e) {
+      if (e.message === 'token_expired') { accessToken = null; clearToken(); updateBanner('disconnected'); }
       console.error('Drive save failed', e);
     }
   }
 
-  function persist() {
-    localSave();
-    if (accessToken) saveToDrive();
-  }
+  function persist() { localSave(); if (accessToken) saveToDrive(); }
 
-  // ── RENDER ────────────────────────────────────────────
+  // ── HELPERS ───────────────────────────────────────────
   function formatDate(iso) {
-    return new Date(iso).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   }
   function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+  function groupIcon(name) {
+    let h = 0; for (let i=0; i<name.length; i++) h = (h*31+name.charCodeAt(i))>>>0;
+    return GROUP_ICONS[h % GROUP_ICONS.length];
+  }
+  function avgRating(arr) {
+    if (!arr.length) return 0;
+    return arr.reduce((s,e)=>s+(e.rating??1),0)/arr.length;
+  }
+  function avgEmoji(avg) {
+    if (avg >= 1.7) return '🔥';
+    if (avg >= 0.7) return '👍';
+    return '😐';
+  }
 
+  // ── FILTER / SORT ─────────────────────────────────────
+  function setFilter(f, btn) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  function getFilteredEntries() {
+    const q = (document.getElementById('search')?.value||'').toLowerCase();
+    return entries.filter(e => {
+      if (q && !e.restaurant.toLowerCase().includes(q) && !e.dish.toLowerCase().includes(q) && !(e.notes||'').toLowerCase().includes(q)) return false;
+      if (currentFilter === 'repeat') return e.wouldOrder;
+      if (currentFilter !== 'all') return String(e.rating) === currentFilter;
+      return true;
+    });
+  }
+
+  function groupAndSort(filtered) {
+    const groups = {};
+    filtered.forEach(e => {
+      const k = e.restaurant.trim().toLowerCase();
+      if (!groups[k]) groups[k] = { name: e.restaurant.trim(), entries: [] };
+      groups[k].entries.push(e);
+    });
+    Object.values(groups).forEach(g => g.entries.sort((a,b)=>b.id-a.id));
+
+    const sort = document.getElementById('sort-select')?.value || 'recent';
+    return Object.values(groups).sort((a,b) => {
+      if (sort === 'name') return a.name.localeCompare(b.name);
+      if (sort === 'rating') return avgRating(b.entries) - avgRating(a.entries);
+      if (sort === 'visits') return b.entries.length - a.entries.length;
+      return b.entries[0].id - a.entries[0].id; // recent
+    });
+  }
+
+  // ── RENDER ────────────────────────────────────────────
   function render() {
-    const q = (document.getElementById('search')?.value || '').toLowerCase();
-    const filtered = q
-      ? entries.filter(e =>
-          e.restaurant.toLowerCase().includes(q) ||
-          e.dish.toLowerCase().includes(q) ||
-          (e.notes||'').toLowerCase().includes(q))
-      : entries;
+    const filtered = getFilteredEntries();
+    const groups   = groupAndSort(filtered);
+    const q        = (document.getElementById('search')?.value||'').toLowerCase();
 
     document.getElementById('count-label').textContent =
-      `${entries.length} ${entries.length === 1 ? 'order' : 'orders'}`;
-    document.getElementById('search-wrap').style.display = entries.length > 2 ? 'block' : 'none';
+      `${entries.length} ${entries.length===1?'order':'orders'} · ${Object.keys(groupAndSort(entries)).length || groups.length} spots`;
+    document.getElementById('controls').style.display = entries.length > 0 ? 'flex' : 'none';
 
     const list = document.getElementById('list');
-    if (filtered.length === 0) {
-      list.innerHTML = `<div class="empty"><div class="empty-icon">🍜</div><p class="empty-text">${q ? 'No matches found.' : 'No orders yet. Tap + to log your first!'}</p></div>`;
+    if (groups.length === 0) {
+      list.innerHTML = `<div class="empty"><div class="empty-icon">🍜</div><p class="empty-text">${q||currentFilter!=='all' ? 'No matches found.' : 'No orders yet. Tap + to log your first!'}</p></div>`;
       return;
     }
 
-    list.innerHTML = filtered.map(e => {
-      const isOpen = expandedId === e.id;
-      const tagClass = RATING_TAGS[e.rating] ?? 'tag-good';
-      const ratingLabel = RATING_LABELS[e.rating] ?? 'Good';
-      const emoji = RATINGS[e.rating] ?? '👍';
+    list.innerHTML = groups.map(g => {
+      const isOpen  = expandedGroup === g.name.toLowerCase();
+      const avg     = avgRating(g.entries);
+      const repeatCount = g.entries.filter(e=>e.wouldOrder).length;
+      const icon    = groupIcon(g.name);
+
       return `
-        <div class="card" onclick="toggleCard(${e.id})">
-          <div class="card-header">
-            <div class="card-emoji">${emoji}</div>
-            <div class="card-info">
-              <div class="card-restaurant">${esc(e.restaurant)}</div>
-              <div class="card-dish">${esc(e.dish)}</div>
+        <div class="restaurant-group">
+          <div class="group-header" onclick="toggleGroup('${esc(g.name.toLowerCase())}')">
+            <div class="group-icon">${icon}</div>
+            <div class="group-info">
+              <div class="group-name">${esc(g.name)}</div>
+              <div class="group-meta">
+                <span class="group-avg">${avgEmoji(avg)}</span>
+                <span class="group-meta-item">${g.entries.length} ${g.entries.length===1?'order':'orders'}</span>
+                ${repeatCount > 0 ? `<span class="group-meta-item">· ↩ ${repeatCount}x</span>` : ''}
+              </div>
             </div>
-            <div class="card-date">${formatDate(e.date)}</div>
+            <div class="group-chevron ${isOpen?'open'}">▾</div>
           </div>
           ${isOpen ? `
-          <div class="card-body"><div class="card-body-inner">
-            <div class="tags">
-              <span class="tag ${tagClass}">${ratingLabel}</span>
-              ${e.wouldOrder ? '<span class="tag tag-repeat">Would order again</span>' : ''}
-            </div>
-            ${e.notes ? `<div class="card-notes">${esc(e.notes)}</div>` : ''}
-            <div class="card-actions">
-              <button class="edit-btn" onclick="editEntry(event,${e.id})">Edit</button>
-              <button class="delete-btn" onclick="deleteEntry(event,${e.id})">Delete</button>
-            </div>
-          </div></div>` : ''}
+          <div class="group-entries">
+            ${g.entries.map(e => {
+              const isEntryOpen = expandedEntry === e.id;
+              const tagClass = RATING_TAGS[e.rating]??'tag-good';
+              const ratingLabel = RATING_LABELS[e.rating]??'Good';
+              return `
+                <div class="entry-row" onclick="toggleEntry(event,${e.id})">
+                  <div class="entry-row-top">
+                    <div class="entry-dish">${esc(e.dish)}</div>
+                    <div class="entry-date">${formatDate(e.date)}</div>
+                  </div>
+                  ${isEntryOpen ? `
+                  <div class="entry-detail">
+                    <div class="tags">
+                      <span class="tag ${tagClass}">${ratingLabel}</span>
+                      ${e.wouldOrder?'<span class="tag tag-repeat">Would order again</span>':''}
+                    </div>
+                    ${e.notes?`<div class="entry-notes">${esc(e.notes)}</div>`:''}
+                    <div class="entry-actions">
+                      <button class="edit-btn" onclick="editEntry(event,${e.id})">Edit</button>
+                      <button class="delete-btn" onclick="deleteEntry(event,${e.id})">Delete</button>
+                    </div>
+                  </div>` : ''}
+                </div>`;
+            }).join('')}
+          </div>` : ''}
         </div>`;
     }).join('');
   }
 
-  function toggleCard(id) { expandedId = expandedId === id ? null : id; render(); }
-
+  function toggleGroup(name) {
+    expandedGroup = expandedGroup === name ? null : name;
+    expandedEntry = null;
+    render();
+  }
+  function toggleEntry(ev, id) {
+    ev.stopPropagation();
+    expandedEntry = expandedEntry === id ? null : id;
+    render();
+  }
   function deleteEntry(ev, id) {
     ev.stopPropagation();
-    entries = entries.filter(x => x.id !== id);
-    if (expandedId === id) expandedId = null;
-    persist(); render();
-    toast('Entry deleted');
+    entries = entries.filter(x=>x.id!==id);
+    if (expandedEntry===id) expandedEntry=null;
+    persist(); render(); toast('Entry deleted');
   }
+
+  // ── AUTOCOMPLETE ──────────────────────────────────────
+  function getRestaurantNames() {
+    return [...new Set(entries.map(e=>e.restaurant.trim()))].sort();
+  }
+  function showAutocomplete() {
+    const val  = document.getElementById('f-restaurant').value.toLowerCase();
+    const list = document.getElementById('autocomplete');
+    const names = getRestaurantNames().filter(n => n.toLowerCase().includes(val) && val.length > 0);
+    acHighlight = -1;
+    if (!names.length) { list.style.display='none'; return; }
+    list.innerHTML = names.map((n,i) =>
+      `<div class="autocomplete-item" onclick="selectAC('${esc(n)}')">${esc(n)}</div>`
+    ).join('');
+    list.style.display = 'block';
+  }
+  function selectAC(name) {
+    document.getElementById('f-restaurant').value = name;
+    document.getElementById('autocomplete').style.display = 'none';
+    document.getElementById('f-dish').focus();
+  }
+  function handleAutoKey(ev) {
+    const list  = document.getElementById('autocomplete');
+    const items = list.querySelectorAll('.autocomplete-item');
+    if (!items.length) return;
+    if (ev.key === 'ArrowDown') { acHighlight = Math.min(acHighlight+1, items.length-1); highlightAC(items); ev.preventDefault(); }
+    else if (ev.key === 'ArrowUp') { acHighlight = Math.max(acHighlight-1, -1); highlightAC(items); ev.preventDefault(); }
+    else if (ev.key === 'Enter' && acHighlight >= 0) { selectAC(items[acHighlight].textContent); ev.preventDefault(); }
+    else if (ev.key === 'Escape') { list.style.display='none'; }
+  }
+  function highlightAC(items) {
+    items.forEach((el,i) => el.classList.toggle('highlighted', i===acHighlight));
+  }
+  document.addEventListener('click', e => {
+    if (!document.getElementById('restaurant-group').contains(e.target))
+      document.getElementById('autocomplete').style.display='none';
+  });
 
   // ── FORM ──────────────────────────────────────────────
   function openForm() {
@@ -486,42 +575,41 @@
     document.getElementById('f-dish').value = '';
     document.getElementById('f-notes').value = '';
     document.getElementById('f-repeat').checked = true;
+    document.getElementById('autocomplete').style.display = 'none';
     setRating(1);
     document.getElementById('overlay').style.display = 'flex';
     setTimeout(() => document.getElementById('f-restaurant').focus(), 100);
   }
-
   function editEntry(ev, id) {
     ev.stopPropagation();
-    const entry = entries.find(x => x.id === id);
-    if (!entry) return;
+    const e = entries.find(x=>x.id===id); if (!e) return;
     editingId = id;
     document.getElementById('form-title').textContent = 'Edit order';
-    document.getElementById('f-restaurant').value = entry.restaurant;
-    document.getElementById('f-dish').value = entry.dish;
-    document.getElementById('f-notes').value = entry.notes || '';
-    document.getElementById('f-repeat').checked = entry.wouldOrder;
-    setRating(entry.rating ?? 1);
+    document.getElementById('f-restaurant').value = e.restaurant;
+    document.getElementById('f-dish').value = e.dish;
+    document.getElementById('f-notes').value = e.notes||'';
+    document.getElementById('f-repeat').checked = e.wouldOrder;
+    document.getElementById('autocomplete').style.display = 'none';
+    setRating(e.rating??1);
     document.getElementById('overlay').style.display = 'flex';
-    setTimeout(() => document.getElementById('f-restaurant').focus(), 100);
+    setTimeout(() => document.getElementById('f-dish').focus(), 100);
   }
-
-  function closeForm() { document.getElementById('overlay').style.display = 'none'; }
-  function handleOverlayClick(e) { if (e.target === document.getElementById('overlay')) closeForm(); }
-
+  function closeForm() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('autocomplete').style.display = 'none';
+  }
+  function handleOverlayClick(e) { if (e.target===document.getElementById('overlay')) closeForm(); }
   function setRating(r) {
     currentRating = r;
     document.querySelectorAll('.rating-btn').forEach(btn =>
-      btn.classList.toggle('active', parseInt(btn.dataset.r) === r));
+      btn.classList.toggle('active', parseInt(btn.dataset.r)===r));
   }
-
   function saveEntry() {
     const restaurant = document.getElementById('f-restaurant').value.trim();
-    const dish = document.getElementById('f-dish').value.trim();
+    const dish       = document.getElementById('f-dish').value.trim();
     if (!restaurant || !dish) return;
-
     if (editingId !== null) {
-      entries = entries.map(x => x.id === editingId ? {
+      entries = entries.map(x => x.id===editingId ? {
         ...x, restaurant, dish,
         notes: document.getElementById('f-notes').value.trim(),
         rating: currentRating,
@@ -530,27 +618,25 @@
       toast('Entry updated');
     } else {
       entries.unshift({
-        id: Date.now(),
-        date: new Date().toISOString(),
+        id: Date.now(), date: new Date().toISOString(),
         restaurant, dish,
         notes: document.getElementById('f-notes').value.trim(),
         rating: currentRating,
         wouldOrder: document.getElementById('f-repeat').checked
       });
-      toast(accessToken ? 'Saved & synced to Drive ✓' : 'Saved locally');
+      toast(accessToken ? 'Saved & synced ✓' : 'Saved locally');
     }
     persist(); closeForm(); render();
   }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && document.getElementById('overlay').style.display !== 'none') {
-      if (document.activeElement?.tagName !== 'TEXTAREA') saveEntry();
+    if (e.key==='Enter' && document.getElementById('overlay').style.display!=='none') {
+      if (document.activeElement?.tagName!=='TEXTAREA' && document.getElementById('autocomplete').style.display==='none') saveEntry();
     }
-    if (e.key === 'Escape') closeForm();
+    if (e.key==='Escape') closeForm();
   });
 
-  localLoad();
-  render();
+  localLoad(); render();
 </script>
 </body>
 </html>
